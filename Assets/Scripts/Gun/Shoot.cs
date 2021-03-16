@@ -37,6 +37,11 @@ public class Shoot : MonoBehaviour
 
     void Update()
     {
+        Shooting();
+    }
+
+    private void Shooting()
+    {
         if (Input.GetKey(KeyCode.R))
         {
             Reload();

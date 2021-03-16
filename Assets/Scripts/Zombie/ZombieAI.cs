@@ -28,15 +28,13 @@ public class ZombieAI : MonoBehaviour
 
     void Update()
     {
-        if (_zombieHealth.GetCurrentHealth() <= 0)
-        {
-            SetState(ZombieState.Dead);
-        }
+        HandleState();
+    }
+
+    private void HandleState()
+    {
         switch (_zombieState)
         {
-            case ZombieState.Dead:
-                KillZombie();
-                break;
             case ZombieState.Attack:
                 Attack();
                 break;
@@ -93,12 +91,5 @@ public class ZombieAI : MonoBehaviour
         _agent.SetDestination(_playerObject.transform.position);
         //agent.Move();
         SetState(ZombieState.Walk);
-    }
-
-    private void KillZombie()
-    {
-        SetState(ZombieState.Dead);
-        _agent.isStopped = true;
-        Destroy(gameObject, 5);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class ZombieHealth : MonoBehaviour
 {
@@ -8,10 +9,15 @@ public class ZombieHealth : MonoBehaviour
     [SerializeField] Text changingText;
 #pragma warning restore 0649
     private int _currentHealth;
+    private Animator _animator;
+    private NavMeshAgent _agent;
+    private ZombieState _zombieState;
     void Start()
     {
         _currentHealth = startHealth;
         UpdateZombieHealthText(_currentHealth);
+        _animator = GetComponent<Animator>();
+        _agent = GetComponent<NavMeshAgent>();
     }
 
     public void UpdateZombieHealthText(int currentHealth)
@@ -31,6 +37,9 @@ public class ZombieHealth : MonoBehaviour
         {
             _currentHealth = 0;
             Debug.Log("Zombie killed");
+            _animator.SetTrigger("IsDead");
+            _agent.isStopped = true;
+            Destroy(gameObject, 5);
         }
         Debug.Log("Zombie get damage" + _currentHealth);
     }
